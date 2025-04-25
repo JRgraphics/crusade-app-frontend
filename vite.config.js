@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react";
+import vercel from "vite-plugin-vercel";
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
@@ -15,7 +16,7 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-    plugins: [react()],
+    plugins: [react(), vercel()],
     define: {
       "process.env.GOOGLE_CLIENT_ID": process.env.GOOGLE_CLIENT_ID,
     },
