@@ -25,6 +25,7 @@ const PrivateRoute = ({ element }) => {
         setAuthLoading(false);
       })
       .catch((error) => {
+        Cookies.remove("auth_token");
         navigate("/login");
       });
   };
