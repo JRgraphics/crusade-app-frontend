@@ -8,7 +8,7 @@ const GoogleAuth = (props) => {
     console.log(credentialResponse);
     axios
       .post(
-        `${import.meta.env.VITE_BACKEND_URL}/auth/google`,
+        `/api/auth/google?login=true`,
         {
           clientId: credentialResponse.clientId,
         },

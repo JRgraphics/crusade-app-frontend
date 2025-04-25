@@ -1,14 +1,13 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
-import GoogleAuth from "./components/GoogleAuth";
-import { useNavigate } from "react-router";
 import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 
-function Login() {
-  let navigate = useNavigate();
+const PrivateRoute = ({ element }) => {
   const [authLoading, setAuthLoading] = useState(true);
+  let navigate = useNavigate();
 
-  useEffect(() => {
+  const checkAuth = async () => {
     axios
       .post(
         `/api/auth/google`,
@@ -23,23 +22,22 @@ function Login() {
         }
       )
       .then((res) => {
-        navigate("/");
-      })
-      .catch((error) => {})
-      .finally(() => {
         setAuthLoading(false);
+      })
+      .catch((error) => {
+        navigate("/login");
       });
-  }, []);
-
-  const handleLogin = () => {
-    navigate("/");
   };
 
-  return (
-    <>
-      <GoogleAuth handleLogin={handleLogin} />
-    </>
-  );
-}
+  useEffect(() => {
+    checkAuth();
+  }, []);
 
-export default Login;
+  if (authLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return element;
+};
+
+export default PrivateRoute;
